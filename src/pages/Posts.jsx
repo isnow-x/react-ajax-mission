@@ -1,3 +1,6 @@
+import { Routes, Route, Link } from "react-router";
+import PostDetail from "./PostDetail";
+
 export default function Posts({ posts, onClick }) {
   return (
     <>
@@ -6,15 +9,14 @@ export default function Posts({ posts, onClick }) {
         {posts.map(l =>
           posts ? (
             <li key={l.id}>
-              <a
-                href={l.id}
+              <Link
+                to={`/posts/${l.id}`}
                 onClick={e => {
-                  e.preventDefault();
                   onClick(l.id);
                 }}
               >
                 {l.title}
-              </a>
+              </Link>
               {` ${l.createdAt}`}
             </li>
           ) : (

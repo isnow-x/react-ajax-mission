@@ -4,6 +4,7 @@ import Home from "./pages/Home";
 import Posts from "./pages/Posts";
 import PostNew from "./pages/PostNew";
 import Layout from "./components/Layout";
+import PostDetail from "./pages/PostDetail";
 import { useEffect, useState } from "react";
 
 function App() {
@@ -31,8 +32,9 @@ function App() {
         <Routes>
           <Route path="/" element={<Layout loaded={loaded} />}>
             <Route path="/" element={<Home posts={posts} onClick={handleFetch} />} />
-            <Route path="/Posts" element={<Posts posts={posts} onClick={handleFetch} />} />
-            <Route path="/Posts/new" element={<PostNew />} />
+            <Route path="/posts" element={<Posts posts={posts} onClick={handleFetch} />} />
+            <Route path="/posts/:id" element={<PostDetail posts={posts} />} />
+            <Route path="/posts/new" element={<PostNew />} />
           </Route>
         </Routes>
       </div>
