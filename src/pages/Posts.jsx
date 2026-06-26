@@ -1,5 +1,4 @@
-import { Routes, Route, Link } from "react-router";
-import PostDetail from "./PostDetail";
+import { Link } from "react-router";
 
 export default function Posts({ posts, onClick }) {
   return (
@@ -11,7 +10,7 @@ export default function Posts({ posts, onClick }) {
             <li key={l.id}>
               <Link
                 to={`/posts/${l.id}`}
-                onClick={e => {
+                onClick={() => {
                   onClick(l.id);
                 }}
               >

@@ -1,6 +1,4 @@
-import { Routes, Route, NavLink, Link } from "react-router";
-import Posts from "./Posts";
-import PostDetail
+import { Link } from "react-router";
 
 export default function Home({ posts, onClick }) {
   return (
@@ -12,15 +10,14 @@ export default function Home({ posts, onClick }) {
         {posts.map(l =>
           posts ? (
             <li key={l.id}>
-              <NavLink
-                href={l.id}
-                onClick={e => {
-                  e.preventDefault();
+              <Link
+                to={`/posts/${l.id}`}
+                onClick={() => {
                   onClick(l.id);
                 }}
               >
                 {l.title}
-              </NavLink>
+              </Link>
               {` (${l.createdAt})`}
             </li>
           ) : (
@@ -28,9 +25,6 @@ export default function Home({ posts, onClick }) {
           ),
         )}
       </section>
-      <Routes>
-        <Route path="/posts/:id" element={<Posts />} />
-      </Routes>
     </>
   );
 }
