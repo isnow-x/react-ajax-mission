@@ -7,14 +7,15 @@ import Layout from "./components/Layout";
 import { useEffect, useState } from "react";
 
 function App() {
-  const loaded = true;
-  const [list, setList] = useState([]);
+  const [loaded, setLoaded] = useState(false);
+  const [posts, setPosts] = useState([]);
   useEffect(() => {
     fetch("./data/blog.json")
       .then(res => res.json())
       .then(result => {
         console.log(result);
-        setList(result);
+        setPosts(result);
+        setLoaded(true);
       });
   }, []);
   const handleFetch = _id => {
@@ -29,8 +30,8 @@ function App() {
       <div>
         <Routes>
           <Route path="/" element={<Layout loaded={loaded} />}>
-            <Route path="/" element={<Home data={list} onClick={handleFetch} />} />
-            <Route path="/Posts" element={<Posts />} />
+            <Route path="/" element={<Home posts={posts} onClick={handleFetch} />} />
+            <Route path="/Posts" element={<Posts posts={posts} onClick={handleFetch} />} />
             <Route path="/Posts/new" element={<PostNew />} />
           </Route>
         </Routes>
