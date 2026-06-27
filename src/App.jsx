@@ -5,6 +5,7 @@ import Posts from "./pages/Posts";
 import PostNew from "./pages/PostNew";
 import Layout from "./components/Layout";
 import PostDetail from "./pages/PostDetail";
+import PostEdit from "./pages/PostEdit";
 import { useEffect, useState } from "react";
 
 function App() {
@@ -26,6 +27,9 @@ function App() {
         console.log(result);
       });
   };
+  const handleUpdate = (id, updatePost) => {
+    setPosts(posts.map(post => (post.id === Number(id) ? { ...post, ...updatePost } : post)));
+  };
   return (
     <>
       <div>
@@ -33,7 +37,11 @@ function App() {
           <Route path="/" element={<Layout loaded={loaded} />}>
             <Route path="/" element={<Home posts={posts} onClick={handleFetch} />} />
             <Route path="/posts" element={<Posts posts={posts} onClick={handleFetch} />} />
-            <Route path="/posts/:id" element={<PostDetail posts={posts} />} />
+            <Route path="/posts/:id" element={<PostDetail posts={posts} onClick={handleFetch} />} />
+            <Route
+              path="/posts/:id/edit"
+              element={<PostEdit posts={posts} onUpdate={handleUpdate} />}
+            />
             <Route path="/posts/new" element={<PostNew />} />
           </Route>
         </Routes>
