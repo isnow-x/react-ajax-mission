@@ -6,6 +6,7 @@ import PostNew from "./pages/PostNew";
 import Layout from "./components/Layout";
 import PostDetail from "./pages/PostDetail";
 import PostEdit from "./pages/PostEdit";
+import NotFound from "./pages/NotFound";
 import { useEffect, useState } from "react";
 
 function App() {
@@ -63,6 +64,7 @@ function App() {
               element={<PostEdit posts={posts} onUpdate={handleUpdate} />}
             />
             <Route path="/posts/new" element={<PostNew onCreate={handleCreate} />} />
+            <Route path="*" element={<NotFound />} />
           </Route>
         </Routes>
       </div>
