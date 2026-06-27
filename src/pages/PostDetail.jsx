@@ -14,6 +14,8 @@ export default function PostDetail({ posts, onClick, onDelete }) {
           <Link to={`/posts/${post.id}/edit`}>수정하기</Link>
           <button
             onClick={() => {
+              const ok = confirm("정말 삭제하시겠습니까?");
+              if (!ok) return;
               onDelete(id);
               navigate("/posts");
             }}
