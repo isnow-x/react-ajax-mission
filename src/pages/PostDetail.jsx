@@ -1,8 +1,9 @@
-import { Link, useParams } from "react-router";
+import { Link, useParams, useNavigate } from "react-router";
 
-export default function PostDetail({ posts, onClick }) {
+export default function PostDetail({ posts, onClick, onDelete }) {
   const { id } = useParams();
   const post = posts.find(p => p.id === Number(id));
+  let navigate = useNavigate();
   return (
     <>
       <div>
@@ -11,7 +12,14 @@ export default function PostDetail({ posts, onClick }) {
         <p>{post.content}</p>
         <div>
           <Link to={`/posts/${post.id}/edit`}>수정하기</Link>
-          <button>삭제하기</button>
+          <button
+            onClick={() => {
+              onDelete(id);
+              navigate("/posts");
+            }}
+          >
+            삭제하기
+          </button>
         </div>
       </div>
     </>

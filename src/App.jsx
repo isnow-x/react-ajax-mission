@@ -30,6 +30,23 @@ function App() {
   const handleUpdate = (id, updatePost) => {
     setPosts(posts.map(post => (post.id === Number(id) ? { ...post, ...updatePost } : post)));
   };
+  const handleCreate = newPost => {
+    const nextId = Math.max(...posts.map(post => post.id)) + 1;
+
+    const createdPost = {
+      id: nextId,
+      title: newPost.title,
+      content: newPost.content,
+      createdAt: new Date().toISOString().slice(0, 10),
+    };
+
+    setPosts([...posts, createdPost]);
+
+    return nextId;
+  };
+  const handleDelete = id => {
+    setPosts(posts.filter(post => post.id !== Number(id)));
+  };
   return (
     <>
       <div>
@@ -37,12 +54,15 @@ function App() {
           <Route path="/" element={<Layout loaded={loaded} />}>
             <Route path="/" element={<Home posts={posts} onClick={handleFetch} />} />
             <Route path="/posts" element={<Posts posts={posts} onClick={handleFetch} />} />
-            <Route path="/posts/:id" element={<PostDetail posts={posts} onClick={handleFetch} />} />
+            <Route
+              path="/posts/:id"
+              element={<PostDetail posts={posts} onClick={handleFetch} onDelete={handleDelete} />}
+            />
             <Route
               path="/posts/:id/edit"
               element={<PostEdit posts={posts} onUpdate={handleUpdate} />}
             />
-            <Route path="/posts/new" element={<PostNew />} />
+            <Route path="/posts/new" element={<PostNew onCreate={handleCreate} />} />
           </Route>
         </Routes>
       </div>
