@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Home from "./pages/Home";
 import Layout from "./components/Layout";
 import Posts from "./pages/Posts";
+import PostDetail from "./pages/PostDetail";
 
 function App() {
   const [posts, setPosts] = useState([]);
@@ -43,11 +44,8 @@ function App() {
         <Route path="/" element={<Layout loaded={loaded} />}>
           <Route index element={<Home posts={posts} />} />
           <Route path="posts" element={<Posts posts={posts} />} />
-          {/* <Route
-        path="posts/:id"
-        element={<PostDetail posts={} onDelete={}/>}
-      />
-      <Route path="*" element={<NotFound />}/> */}
+          <Route path="post/:id" element={<PostDetail posts={posts} />} />
+          {/* <Route path="*" element={<NotFound />}/> */}
         </Route>
       </Routes>
     </>
