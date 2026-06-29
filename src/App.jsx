@@ -1,11 +1,12 @@
 import "./App.css";
 import { Routes, Route } from "react-router";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import Home from "./pages/Home";
 import Layout from "./components/Layout";
 import Posts from "./pages/Posts";
 import PostDetail from "./pages/PostDetail";
 import NotFound from "./pages/NotFound";
+import PostNew from "./pages/PostNew";
 
 function App() {
   const [posts, setPosts] = useState([]);
@@ -43,6 +44,24 @@ function App() {
     setPosts(prev => prev.filter(post => post.id !== _id));
   };
 
+  const newId = useMemo(() => {
+    const maxId = posts.reduce((acc, current) => {
+      return Math.max(acc, current.id);
+    }, 0);
+    return maxId + 1;
+  }, [posts]);
+
+  const onCreate = ({ title, content }) => {
+    const newPost = {
+      title: title,
+      content: content,
+      id: newId,
+      createdAt: new Date().toISOString().slice(0, 10),
+    };
+    setPosts(prev => [...prev, newPost]);
+    return newPost.id;
+  };
+
   return (
     <>
       <Routes>
@@ -50,6 +69,7 @@ function App() {
           <Route index element={<Home posts={posts} />} />
           <Route path="posts" element={<Posts posts={posts} />} />
           <Route path="post/:id" element={<PostDetail posts={posts} onDelete={onDelete} />} />
+          <Route path="posts/new" element={<PostNew onCreate={onCreate} />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
