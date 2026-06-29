@@ -7,6 +7,7 @@ import Posts from "./pages/Posts";
 import PostDetail from "./pages/PostDetail";
 import NotFound from "./pages/NotFound";
 import PostNew from "./pages/PostNew";
+import PostEdit from "./pages/PostEdit";
 
 function App() {
   const [posts, setPosts] = useState([]);
@@ -62,6 +63,20 @@ function App() {
     return newPost.id;
   };
 
+  const onUpdate = (_id, { title, content }) => {
+    setPosts(prev =>
+      prev.map(p =>
+        p.id === _id
+          ? {
+              ...p,
+              title: title,
+              content: content,
+            }
+          : p,
+      ),
+    );
+  };
+
   return (
     <>
       <Routes>
@@ -69,6 +84,7 @@ function App() {
           <Route index element={<Home posts={posts} />} />
           <Route path="posts" element={<Posts posts={posts} />} />
           <Route path="post/:id" element={<PostDetail posts={posts} onDelete={onDelete} />} />
+          <Route path="post/edit/:id" element={<PostEdit posts={posts} onUpdate={onUpdate} />} />
           <Route path="posts/new" element={<PostNew onCreate={onCreate} />} />
           <Route path="*" element={<NotFound />} />
         </Route>

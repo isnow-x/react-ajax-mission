@@ -27,7 +27,7 @@ export default function PostDetail({ posts, onDelete }) {
       <small>{post.createdAt}</small>
       <p>{post.content}</p>
       <div className="controls">
-        <Link to={`post/edit/${post.id}`}>수정하기</Link>
+        <Link to={`/post/edit/${post.id}`}>수정하기</Link>
         <button onClick={handleDelete}>삭제하기</button>
       </div>
     </>
