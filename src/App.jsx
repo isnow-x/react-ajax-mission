@@ -1,12 +1,38 @@
 import "./App.css";
 import { Routes, Route } from "react-router";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Home from "./pages/Home";
 import Layout from "./components/Layout";
 
 function App() {
   const [posts, setPosts] = useState([]);
   const [loaded, setLoaded] = useState(false);
+
+  useEffect(() => {
+    // let alive = true; // 상품조회 시작
+    const controller = new AbortController();
+    async function fetchData() {
+      try {
+        const res = await fetch("/data/blog.json", {
+          signal: controller.signal,
+        });
+        if (!res.ok) throw new Error("메시지");
+        const data = res.json();
+        etPosts(data);
+      } catch (e) {
+        console.error(e);
+        setPost([]); // 에러시 목록 비움
+      } finally {
+        setLoaded(true);
+      }
+    }
+    fetchData();
+
+    return () => {
+      // alive = false;
+      controller.abort();
+    }; //정리함수
+  }, []);
 
   return (
     <>
