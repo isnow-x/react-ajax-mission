@@ -17,8 +17,8 @@ function App() {
           signal: controller.signal,
         });
         if (!res.ok) throw new Error("메시지");
-        const data = res.json();
-        etPosts(data);
+        const data = await res.json();
+        setPosts(data);
       } catch (e) {
         console.error(e);
         setPost([]); // 에러시 목록 비움
@@ -33,6 +33,8 @@ function App() {
       controller.abort();
     }; //정리함수
   }, []);
+
+  console.log(posts);
 
   return (
     <>
