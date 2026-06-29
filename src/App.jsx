@@ -5,6 +5,7 @@ import Home from "./pages/Home";
 import Layout from "./components/Layout";
 import Posts from "./pages/Posts";
 import PostDetail from "./pages/PostDetail";
+import NotFound from "./pages/NotFound";
 
 function App() {
   const [posts, setPosts] = useState([]);
@@ -38,14 +39,18 @@ function App() {
 
   console.log(posts);
 
+  const onDelete = _id => {
+    setPosts(prev => prev.filter(post => post.id !== _id));
+  };
+
   return (
     <>
       <Routes>
         <Route path="/" element={<Layout loaded={loaded} />}>
           <Route index element={<Home posts={posts} />} />
           <Route path="posts" element={<Posts posts={posts} />} />
-          <Route path="post/:id" element={<PostDetail posts={posts} />} />
-          {/* <Route path="*" element={<NotFound />}/> */}
+          <Route path="post/:id" element={<PostDetail posts={posts} onDelete={onDelete} />} />
+          <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
     </>
